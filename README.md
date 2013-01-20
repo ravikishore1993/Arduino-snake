@@ -15,7 +15,7 @@
 **package.json**
 : Helping file to install required node dependencies . Hint : "sudo npm install"
 **snake_sketch**
-: The [sketchfile](http://arduino.cc/en/Tutorial/Sketch) to be uploaded in the Arduino device . A very simple need-not explain script .
+: This folder has the [sketchfile](http://arduino.cc/en/Tutorial/Sketch) to be uploaded in the Arduino device . A very simple need-not explain script .
 
 ## Connections in Arduino 
 

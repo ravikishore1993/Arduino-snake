@@ -1,0 +1,172 @@
+<DOCTYPE html>
+	<title>
+	  Multi-Snake		
+	</title>
+	<head>
+	  
+	  <script src="./assets/jquery.min.js" ></script>	
+	  <link rel="stylesheet" href="snake.css">
+	  <script type="text/javascript" src="http://192.168.208.224:6543/socket.io/socket.io.js" >/////////Replace 192.168.208.224 with the ip of PC to which Arduino is 
+	  																											//connected 
+	  </script>     
+<script >
+
+
+$('document').ready(function(){
+canvas = document.getElementById('canvas');
+context = canvas.getContext('2d');
+context.fillStyle = "rgb(200,10,0)";
+d="right";
+newx = 0;
+newy = 0;
+	function init(){snake_create();
+	
+
+	snake_food();
+	 //snake_render();
+
+	 setInterval(snake_render, 220);
+	}
+
+function snake_create(){
+
+	snake_array = [];
+	snake_array[0] = { x:0 , y:0 };
+		 snake_array[0];
+				context.fillStyle = "#725A6C";
+		context.fillRect(snake_array[0].x*10, snake_array[0].y*10, 10, 10);
+		context.strokeStyle = "white";
+		context.strokeRect(snake_array[0].x*10, snake_array[0].y*10, 10, 10);		
+
+}        
+	
+ function snake_render(){
+
+ 	context.fillStyle = "white";
+ 	context.fillRect( 0 , 0 , 600 , 600 );
+ 	context.strokeStyle = "black";
+ 	context.strokeRect(0, 0, 600, 600);
+
+ 	
+ length = snake_array.length ;
+ 	
+
+
+
+	
+
+
+	 	if( d == "left" ) newx = snake_array[0].x - 1; 
+ 		if( d == "right" ) newx = snake_array[0].x + 1;
+ 		if( d == "up" ) newy = snake_array[0].y - 1;
+ 		if( d == "down" ) newy = snake_array[0].y + 1;
+
+ 		if( newx == food.x && newy == food.y)
+ 		{
+ 			
+ 			snake_array.unshift({x:food.x , y:food.y});
+ 			snake_food();
+ 		}
+ 		else{
+ 			snake_array.pop();
+ 			//snake_array[snake_array.length -1 ].x = newx;
+ 			//snake_array[snake_array.length -1 ].y = newy;
+ 			snake_array.unshift({x:newx , y:newy});	
+ 		}
+
+
+
+ 	if(snake_array[0].y == -1 )snake_array[0].y = snake_array[0].y +15
+ 	if(snake_array[0].x == -1 )snake_array[0].x =snake_array[0].x + 30  ;	
+		
+		console.log(snake_array.length);
+		
+		if(snake_array[0].x >= 30 )snake_array[0].x =snake_array[0].x % 29 -1  ;
+		if(snake_array[0].y >= 15 )snake_array[0].y =snake_array[0].y % 14 -1 ;	
+	
+
+
+		for(var i = 0; i < snake_array.length; i++)
+		{
+			
+				 if( i == 0){
+				 	console.log("reached");
+							context.fillStyle = "#B87400";
+		context.fillRect(snake_array[i].x*10, snake_array[i].y*10, 10, 10);
+		context.strokeStyle = "white";
+		context.strokeRect(snake_array[i].x*10, snake_array[i].y*10, 10, 10);	 	
+				 }
+		else{			context.fillStyle = "#725A6C";
+		context.fillRect(snake_array[i].x*10, snake_array[i].y*10, 10, 10);
+		context.strokeStyle = "white";
+		context.strokeRect(snake_array[i].x*10, snake_array[i].y*10, 10, 10);		}
+		
+		}
+		
+
+
+		context.fillStyle = "red";
+		context.fillRect(food.x*10, food.y*10, 10, 10);
+		context.strokeStyle = "white";
+		context.strokeRect(food.x*10, food.y*10, 10, 10);
+		
+
+		
+ } 		
+
+$(document).keydown(function(e){
+		var key = e.which;
+		if(key == "37" && d != "right") d = "left";
+		else if(key == "38" && d != "down") d = "up";
+		else if(key == "39" && d != "left") d = "right";
+		else if(key == "40" && d != "up") d = "down";
+	})
+
+var socket = io.connect('http://192.168.208.224:6543');                           /*/////////Replace 192.168.208.224 with the ip of PC to which Arduino is 
+	  																											//connected */
+socket.on('connect' ,init() );
+socket.on('message' , function(message){  
+
+	if(message.m == 5 ){ if( d == "up" ) d = "left";
+						 else if( d=="left" ) d = "down";
+						else if( d=="down" ) d = "right";
+							  else if( d=="right" ) d = "up";
+							  	  }
+	if(message.m == 1 ){
+
+				if( d == "up" ) d = "right";
+						 else if( d=="left" ) d = "up";
+						else if( d=="down" ) d = "left";
+							  else if( d=="right" ) d = "down";
+
+
+
+	}	
+
+
+} );
+
+function snake_food(){
+
+	food = {
+			x: Math.round(Math.random()*(300-10)/10), 
+			y: Math.round(Math.random()*(150-10)/10), 
+		
+
+		};
+		
+
+}
+
+
+});
+
+
+
+	
+</script>
+	</head>
+	<body>
+	  <canvas id='canvas' >
+	  </canvas>	
+	</body>

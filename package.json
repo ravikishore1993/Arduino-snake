@@ -1,0 +1,21 @@
+{
+  
+  "preferGlobal": "true",
+  
+  "author": "Ravi Kishore <ravikishore1993@gmail.com>",
+  "description": "A simple canvas based game playing on Arduino",
+  "contributors": [ 
+    {
+      "name": "Ravi Kishore",
+      "email": "ravikishore1993@gmail.com"
+    } 
+  ],
+  "dependencies" : {
+    "socket.io"   :  "*",
+    "serialport" :  "*",
+   },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.6"
+  }
+}

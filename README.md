@@ -3,6 +3,8 @@
 
 ### The repository consists of 6 files:
 
+**jquery**
+: Used it to manipulate dom .[Jquery](http://jquery.com/).
 **server.js** 
 : Run this file in your node server on the same PC connected to which Arduino is connected.
 **snake.html**
